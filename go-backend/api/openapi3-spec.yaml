@@ -1,0 +1,81 @@
+openapi: 3.0.0
+info:
+  title: File Upload API
+  description: API for uploading files up to 100MB.
+  version: 1.0.0
+paths:
+  /upload:
+    post:
+      summary: Upload a file
+      description: Accepts a file upload with a maximum size of 100MB.
+      operationId: uploadFile
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+            encoding:
+              file:
+                contentType: application/octet-stream
+      responses:
+        '200':
+          description: File uploaded successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "File uploaded successfully"
+                  filename:
+                    type: string
+                    example: "example.png"
+        '400':
+          description: Bad request (file too large or invalid format).
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "The uploaded file is too large. Maximum allowed size is 100MB."
+        '500':
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "An error occurred while processing the file."
+  /thing:
+    get:
+      operationId: thingy
+      responses:
+        '200':
+          description: OK.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Here is your thing"                  
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+security:
+  - BearerAuth: []
+
