@@ -1,13 +1,13 @@
 openapi: 3.0.0
 info:
   title: File Upload API
-  description: API for uploading files up to 100MB.
+  description: API for uploading files.
   version: 1.0.0
 paths:
   /upload:
     post:
       summary: Upload a file
-      description: Accepts a file upload with a maximum size of 100MB.
+      description: Accepts a file upload with a maximum size of 200MB.
       operationId: uploadFile
       requestBody:
         required: true
